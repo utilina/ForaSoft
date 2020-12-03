@@ -19,11 +19,6 @@ struct NetworkManager {
         case canNotProcessData
     }
     
-    enum State {
-        case loading
-        case noResults
-    }
-    
     //fetch data from api to send it to VC
     func fetchData(album: String, completion: @escaping(Result<[Album], NetworkError>) -> Void) {
         //Create url, check it
@@ -44,7 +39,7 @@ struct NetworkManager {
                     // Decode fetched data to Albums type
                     let decoder = JSONDecoder()
                     let decodedData = try decoder.decode(Albums.self, from: jsonData)
-                    let albums = decodedData.results//.sorted(by: { $0.collectionName < $1.collectionName })
+                    let albums = decodedData.results.sorted(by: { $0.collectionName < $1.collectionName })
                     //print(albums)
                     // Pass data
                     completion(.success(albums))
